@@ -1,0 +1,11 @@
+{
+  "_id": "xxxxxx-licensemonth-all2",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "xxxxxx-licensemonth-all"
+  },
+  "transform": [{
+    "type": "emit_children"
+  }]
+}

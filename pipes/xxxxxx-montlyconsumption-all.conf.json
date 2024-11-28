@@ -1,0 +1,36 @@
+{
+  "_id": "xxxxxx-montlyconsumption-all",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "xxxxxx-licensemonth-collect"
+  },
+  "transform": [{
+    "type": "rest",
+    "system": "xxxxxx",
+    "trace": true,
+    "operation": "monthlyconsumption-list",
+    "side_effects": false
+  }, {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*", "response"],
+        ["merge",
+          ["map",
+            ["dict",
+              ["nth", "_.", "_R._S.response.headers"],
+              ["nth", "_.",
+                ["first", "_R._S.response.lines"]
+              ]
+            ],
+            ["range", 0,
+              ["count", "_S.response.headers"]
+            ]
+          ]
+        ]
+      ]
+    }
+  }],
+  "namespaced_identifiers": false
+}

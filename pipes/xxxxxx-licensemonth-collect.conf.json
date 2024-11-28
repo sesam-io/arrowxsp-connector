@@ -1,0 +1,16 @@
+{
+  "_id": "xxxxxx-licensemonth-collect",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "xxxxxx-licensemonth-all2"
+  },
+  "transform": [{
+    "type": "template",
+    "properties": {
+      "primary_key": "id"
+    },
+    "template": "transform-collect-rest"
+  }],
+  "namespaced_identifiers": false
+}
