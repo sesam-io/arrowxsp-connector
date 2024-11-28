@@ -1,9 +1,0 @@
-{
-  "_id": "xxxxxx-montlyconsumption-collect",
-  "type": "pipe",
-  "source": {
-    "type": "dataset",
-    "dataset": "xxxxxx-montlyconsumption-all"
-  },
-  "namespaced_identifiers": false
-}

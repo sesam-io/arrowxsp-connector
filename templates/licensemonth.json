@@ -1,0 +1,146 @@
+[
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-licenses-collect",
+      "type": "dataset"
+    },
+    "transform": {
+      "rules": {
+        "default": [
+          [
+            "add",
+            "_month_count",
+            [
+              "range",
+              0,
+              [
+                "plus",
+                1,
+                [
+                  "datetime-diff",
+                  "month",
+                  [
+                    "now"
+                  ],
+                  [
+                    "datetime-parse",
+                    "%Y-%m-%dT%H:%M:%S.%fZ",
+                    "_S.activation_datetime"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "create-child",
+            [
+              "apply",
+              "license_month",
+              "_T._month_count"
+            ]
+          ]
+        ],
+        "license_month": [
+          [
+            "add",
+            "license_id",
+            "_R._S.license_id"
+          ],
+          [
+            "add",
+            "date_start",
+            [
+              "datetime-format",
+              "%Y-%m",
+              [
+                "datetime-plus",
+                "month",
+                "_S.",
+                [
+                  "datetime-parse",
+                  "%Y-%m-%dT%H:%M:%S.%fZ",
+                  "_R._S.activation_datetime"
+                ]
+              ]
+            ]
+          ],
+          [
+            "comment",
+            "adding a random variable value to trigger reprosessing of this months entities"
+          ],
+          [
+            "if",
+            [
+              "eq",
+              [
+                "datetime-diff",
+                "month",
+                [
+                  "now"
+                ],
+                [
+                  "datetime-parse",
+                  "%Y-%m",
+                  "_T.date_start"
+                ]
+              ],
+              1
+            ],
+            [
+              "add",
+              "temp_reprocess_var",
+              [
+                "uuid"
+              ]
+            ]
+          ],
+          [
+            "add",
+            "_id",
+            [
+              "concat",
+              "_R._S._id",
+              "-",
+              "_T.date_start"
+            ]
+          ]
+        ]
+      },
+      "type": "dtl"
+    },
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all2",
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
+      "type": "dataset"
+    },
+    "transform": [
+      {
+        "type": "emit_children"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all2",
+      "type": "dataset"
+    },
+    "transform": [
+      {
+        "properties": {
+          "primary_key": "id"
+        },
+        "template": "transform-collect-rest",
+        "type": "template"
+      }
+    ],
+    "type": "pipe"
+  }
+]

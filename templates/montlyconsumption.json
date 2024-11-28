@@ -1,0 +1,71 @@
+[
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-licensemonth-collect",
+      "type": "dataset"
+    },
+    "transform": [
+      {
+        "operation": "monthlyconsumption-list",
+        "side_effects": false,
+        "system": "{{@ system @}}",
+        "trace": true,
+        "type": "rest"
+      },
+      {
+        "rules": {
+          "default": [
+            [
+              "copy",
+              "*",
+              "response"
+            ],
+            [
+              "merge",
+              [
+                "map",
+                [
+                  "dict",
+                  [
+                    "nth",
+                    "_.",
+                    "_R._S.response.headers"
+                  ],
+                  [
+                    "nth",
+                    "_.",
+                    [
+                      "first",
+                      "_R._S.response.lines"
+                    ]
+                  ]
+                ],
+                [
+                  "range",
+                  0,
+                  [
+                    "count",
+                    "_S.response.headers"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        },
+        "type": "dtl"
+      }
+    ],
+    "type": "pipe"
+  },
+  {
+    "_id": "{{@ system @}}-{{@ datatype @}}-collect",
+    "namespaced_identifiers": false,
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
+      "type": "dataset"
+    },
+    "type": "pipe"
+  }
+]

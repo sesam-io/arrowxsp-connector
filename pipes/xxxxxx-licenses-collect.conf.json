@@ -1,9 +1,0 @@
-{
-  "_id": "xxxxxx-licenses-collect",
-  "type": "pipe",
-  "source": {
-    "type": "dataset",
-    "dataset": "xxxxxx-licenses-all"
-  },
-  "namespaced_identifiers": false
-}

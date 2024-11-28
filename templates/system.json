@@ -1,6 +1,5 @@
 {
-  "_id": "xxxxxx",
-  "type": "system:rest",
+  "_id": "{{@ system @}}",
   "headers": {
     "Accept": "application/json",
     "apiKey": "$SECRET(arrow_apiKey)"
@@ -10,7 +9,9 @@
       "id_expression": "{{ license_id }}",
       "method": "GET",
       "next_page_link": "{{ body.pagination.next }}",
-      "next_page_termination_strategy": ["next-page-link-empty"],
+      "next_page_termination_strategy": [
+        "next-page-link-empty"
+      ],
       "payload_property": "data.licenses",
       "url": "/licenses?page=1&per_page=5"
     },
@@ -21,6 +22,7 @@
       "url": "/consumption/line/license/{{ entity.license_id }}/{{ entity.date_start }}"
     }
   },
+  "type": "system:rest",
   "url_pattern": "https://xsp.arrow.com/index.php/api%s",
   "verify_ssl": true
 }

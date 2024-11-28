@@ -1,0 +1,18 @@
+{
+  "additional_parameters": {},
+  "auth": "api_key",
+  "datatypes": {
+    "licensemonth": {
+      "label": "licensemonth",
+      "template": "templates/licensemonth.json"
+    },
+    "licenses": {
+      "template": "templates/licenses.json"
+    },
+    "montlyconsumption": {
+      "template": "templates/montlyconsumption.json"
+    }
+  },
+  "system-template": "templates/system.json",
+  "use_webhook_secret": false
+}
