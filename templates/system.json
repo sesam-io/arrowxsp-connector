@@ -2,7 +2,7 @@
   "_id": "{{@ system @}}",
   "headers": {
     "Accept": "application/json",
-    "apiKey": "$SECRET(arrow_apiKey)"
+    "apiKey": "$SECRET(api_key)"
   },
   "operations": {
     "licenses-list": {
