@@ -9,9 +9,6 @@
     "licenses": {
       "template": "templates/licenses.json"
     },
-    "monthly": {
-      "template": "templates/monthly.json"
-    },
     "montlyconsumption": {
       "template": "templates/montlyconsumption.json"
     }
