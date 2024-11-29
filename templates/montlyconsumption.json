@@ -23,6 +23,16 @@
               "response"
             ],
             [
+              "create-child",
+              [
+                "apply",
+                "lines",
+                "_S.response.lines"
+              ]
+            ]
+          ],
+          "lines": [
+            [
               "merge",
               [
                 "map",
@@ -36,10 +46,7 @@
                   [
                     "nth",
                     "_.",
-                    [
-                      "first",
-                      "_R._S.response.lines"
-                    ]
+                    "_S."
                   ]
                 ],
                 [
@@ -47,9 +54,36 @@
                   0,
                   [
                     "count",
-                    "_S.response.headers"
+                    "_R._S.response.headers"
                   ]
                 ]
+              ]
+            ],
+            [
+              "add",
+              "license_id",
+              "_R._S.license_id"
+            ],
+            [
+              "add",
+              "period",
+              "_R._S.date_start"
+            ],
+            [
+              "add",
+              "_id",
+              [
+                "concat",
+                "_R._S.license_id",
+                "_",
+                "_T.Resource Group",
+                "_",
+                "_T.Resource Name",
+                "_",
+                "_R._S.date_start",
+                "_",
+                "_T.Vendor Ressource SKU",
+                "_T.Region"
               ]
             ]
           ]
@@ -60,10 +94,21 @@
     "type": "pipe"
   },
   {
+    "_id": "{{@ system @}}-{{@ datatype @}}-all2",
+    "source": {
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
+      "type": "dataset"
+    },
+    "transform": {
+      "type": "emit_children"
+    },
+    "type": "pipe"
+  },
+  {
     "_id": "{{@ system @}}-{{@ datatype @}}-collect",
     "namespaced_identifiers": false,
     "source": {
-      "dataset": "{{@ system @}}-{{@ datatype @}}-all",
+      "dataset": "{{@ system @}}-{{@ datatype @}}-all2",
       "type": "dataset"
     },
     "type": "pipe"

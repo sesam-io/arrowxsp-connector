@@ -1,28 +1,46 @@
-{
-  "_id": "{{@ system @}}",
-  "headers": {
-    "Accept": "application/json",
-    "apiKey": "$SECRET(api_key)"
-  },
-  "operations": {
-    "licenses-list": {
-      "id_expression": "{{ license_id }}",
-      "method": "GET",
-      "next_page_link": "{{ body.pagination.next }}",
-      "next_page_termination_strategy": [
-        "next-page-link-empty"
-      ],
-      "payload_property": "data.licenses",
-      "url": "/licenses?page=1&per_page=5"
+[
+  {
+    "_id": "arrow-billing",
+    "docker": {
+      "environment": {
+        "API_KEY": "cbRJxjtUgPDcXPtaoDmpCFzDPemEGgGc",
+        "TEST": "1"
+      },
+      "image": "baardbouvet/arrowxsp:latest",
+      "memory": 4000,
+      "port": 5000
     },
-    "monthlyconsumption-list": {
-      "id_expression": "{{ license_id }}",
-      "method": "GET",
-      "payload_property": "data",
-      "url": "/consumption/line/license/{{ entity.license_id }}/{{ entity.date_start }}"
-    }
+    "read_timeout": 7200,
+    "type": "system:microservice",
+    "use_https": false,
+    "verify_ssl": false
   },
-  "type": "system:rest",
-  "url_pattern": "https://xsp.arrow.com/index.php/api%s",
-  "verify_ssl": true
-}
+  {
+    "_id": "{{@ system @}}",
+    "headers": {
+      "Accept": "application/json",
+      "apiKey": "$SECRET(api_key)"
+    },
+    "operations": {
+      "licenses-list": {
+        "id_expression": "{{ license_id }}",
+        "method": "GET",
+        "next_page_link": "{{ body.pagination.next }}",
+        "next_page_termination_strategy": [
+          "next-page-link-empty"
+        ],
+        "payload_property": "data.licenses",
+        "url": "/licenses?page=1&per_page=5"
+      },
+      "monthlyconsumption-list": {
+        "id_expression": "{{ license_id }}",
+        "method": "GET",
+        "payload_property": "data",
+        "url": "/consumption/line/license/{{ entity.license_id }}/{{ entity.date_start }}"
+      }
+    },
+    "type": "system:rest",
+    "url_pattern": "https://xsp.arrow.com/index.php/api%s",
+    "verify_ssl": true
+  }
+]
