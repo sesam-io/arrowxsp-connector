@@ -1,21 +1,5 @@
 [
   {
-    "_id": "arrow-billing",
-    "docker": {
-      "environment": {
-        "API_KEY": "cbRJxjtUgPDcXPtaoDmpCFzDPemEGgGc",
-        "TEST": "1"
-      },
-      "image": "baardbouvet/arrowxsp:latest",
-      "memory": 4000,
-      "port": 5000
-    },
-    "read_timeout": 7200,
-    "type": "system:microservice",
-    "use_https": false,
-    "verify_ssl": false
-  },
-  {
     "_id": "{{@ system @}}",
     "headers": {
       "Accept": "application/json",
